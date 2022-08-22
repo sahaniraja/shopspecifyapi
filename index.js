@@ -7,10 +7,15 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 
-app.get('/',(req,res)=>{
-    res.send('Backend Connected Successfully!!!!')
+const dbConnect = mongoose.connect(process.env.MONGO_URL,{
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+}).then(()=>{
+	app.get('/',(req,res)=>{
+        res.send('Backend Connected Successfully!!!! With MONGO')
+    })
 })
 
 
 const port = process.env.PORT || 5000;
-app.listen(port,()=> console.log(`Server running on ${port}`));
+app.listen(port,()=> console.log(`Server running on ${port}`))
